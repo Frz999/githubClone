@@ -1,0 +1,740 @@
+<div style="padding: 0 32px 0 32px;margin-bottom: 2em;max-width: 1280px;margin: auto;" [ngClass]="{'ui':!mobileView}"
+    class="ui grid">
+
+    <div class="ui sticky sixteen wide column" style="height: 47px !important;margin-top: 24px;border-bottom: 1px solid #e1e4e8;top: 0;padding-top: 1em;overflow-x: auto;background: white;position: sticky;overflow-y: hidden;display: flex;
+    justify-content: center;
+    align-items: center;padding-left: 5em;">
+        <!-- <div class="four wide column"></div> -->
+        <div [style.width]="!mobileView ? '25em':''" class="twelve wide column">
+            <div style="border: none;" class="ui fluid four item tabular menu">
+                <a (click)="selectedTab = 'overview'" style="width: 9em;height: 2.4em;"
+                    [ngClass]="{'actives':selectedTab == 'overview'}" class="item borderless"><i style="color: #959da5;"
+                        class="leanpub alternate outline icon"></i>Overview</a>
+                <a (click)="selectedTab = 'repositories'" style="width: 9em;height: 2.4em;"
+                    [ngClass]="{'actives':selectedTab == 'repositories'}" class="item"><i style="color: #959da5;"
+                        class="book icon"></i>Repositories <a *ngIf="userData.repositories.totalCount"
+                        style="background: #D1D5DA80;color: #24292e;margin-left: 0.5em;"
+                        class="ui label">{{userData.repositories.totalCount}}</a></a>
+                <a (click)="selectedTab = 'projects'" style="width: 9em;height: 2.4em;"
+                    [ngClass]="{'actives':selectedTab == 'projects'}" class="item"><i style="color: #959da5;"
+                        class="keyboard outline icon"></i>Projects<a *ngIf="userData.projects.totalCount" 
+                        style="background: #D1D5DA80;color: #24292e;margin-left: 0.5em;"
+                        class="ui label">{{userData.projects.totalCount}}</a></a>
+                <a (click)="selectedTab = 'packages'" style="width: 9em;height: 2.4em;"
+                    [ngClass]="{'actives':selectedTab == 'packages'}" class="item"><i style="color: #959da5;"
+                        class="cube icon"></i>Packages</a>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: -2em;" class="four wide column">
+
+        <div [class.ui]='mobileView' [style.padding-top]="mobileView ? '3em':''" class="grid">
+            <span>
+        <img style="z-index: 1000;" [class.small]='mobileView' [class.medium]='!mobileView' class="ui circular image" src={{userData.avatarUrl}}>
+           </span>
+        <div *ngIf="userData.name" style="margin-top: 8px;width: auto;" class="wide column">
+            <span style="font-size: 20px;font-weight: 600;
+            line-height: 24px;color: #24292e;">
+                {{userData.name}}
+            </span>
+            <div *ngIf="userData.login" class="wide column">
+                <a style="font-size: 20px;font-weight: 300;
+                line-height: 20px;color: #586069;">{{userData.login}}</a>
+            </div>
+        </div>
+
+         </div>
+
+        <div *ngIf="userData.bio" style="margin-top: 10px;" class="wide column">
+            <span style="font-size: 16px;color: #24292e;">{{userData.bio}}</span>
+        </div>
+
+        <div style="margin-top: 2em;line-height: 3em;" class="wide column">
+            <div style="width: 80%;" class="ui basic button outline">Follow</div>
+            <div style="width: 10%;"  class="ui basic button">...</div>
+        </div>
+
+        <div style="margin-top: 8px;" class="wide column">
+            <span style="font-size: 14px;color: #586069;"><i style="color: #586069;" class="user outline icon"></i><span
+                    style="font-weight: 600!important;color: #24292e;">{{userData.followers.totalCount ? userData.followers.totalCount : 0}}</span>
+                followers · <span
+                    style="font-weight: 600!important;color: #24292e;">{{userData.following.totalCount ? userData.following.totalCount : 0}}</span>
+                following · <i style="color: #586069;" class="star outline icon"></i> <span
+                    style="font-weight: 600!important;color: #24292e;">{{userData?.starredRepositories?.totalCount ? userData?.starredRepositories?.totalCount : 0}}</span></span>
+        </div>
+
+        <div *ngIf="userData.company" style="margin-top: 15px;" class="wide column">
+            <span style="font-size: 14px;color: #586069;"><i style="color: #586069;" class="building outline icon"></i>
+                <span>{{userData.company}}</span> </span>
+        </div>
+
+        <div *ngIf="userData.location" class="wide column">
+            <span style="font-size: 14px;color: #586069;"><i style="color: #586069;"
+                    class="map marker alternate icon"></i> <span>{{userData.location}}</span> </span>
+        </div>
+
+        <div *ngIf="userData.email" class="wide column">
+            <span style="font-size: 14px;color: #586069;"><i style="color: #586069;" class="envelope outline icon"></i>
+                <span>{{userData.email}}</span> </span>
+        </div>
+
+        <div *ngIf="userData.websiteUrl" class="wide column">
+            <span style="font-size: 14px;color: #586069;"><i style="color: #586069;" class="linkify icon"></i>
+                <a>{{userData.websiteUrl}}</a> </span>
+        </div>
+
+        <div *ngIf="userData.twitterUsername" class="wide column">
+            <span style="font-size: 14px;color: #586069;"><i style="color: #586069;" class="twitter icon"></i>
+                <span>{{userData.twitterUsername}}</span> </span>
+        </div>
+
+        <div *ngIf="!mobileView" class="ui divider"></div>
+
+        <div *ngIf="userData?.sponsorshipsAsSponsor.totalCount && !mobileView" class="wide column">
+            <span style="font-size: 16px;font-weight: 600;
+            line-height: 24px;color: #24292e;">
+                Highlights
+            </span>
+        </div>
+
+        <!-- <div style="margin-top: 4px;" class="wide column">
+            <span style="font-size: 14px;color: #586069;"><i style="color: #586069;" class="certificate icon"></i>
+                <span>Arctic Code Vault Contributor</span> </span>
+        </div> -->
+
+        <div *ngIf="userData?.sponsorshipsAsSponsor?.totalCount && !mobileView" style="margin-top: 4px;" class="wide column">
+            <span style="font-size: 14px;color: #586069;"><i style="color: #586069;" class="heart outline icon"></i>
+                <span>{{userData?.sponsorshipsAsSponsor?.totalCount ? "GitHub Sponsor" : 0}}</span> </span>
+        </div>
+
+        <ng-container *ngIf="userData.organizations.totalCount != 0 && !mobileView">
+            <div class="ui divider"></div>
+
+
+            <div class="wide column">
+                <span style="font-size: 16px;font-weight: 600;
+            line-height: 24px;color: #24292e;">
+                    Organizations
+                </span>
+            </div>
+
+            <div style="margin-top: 4px;flex-wrap: wrap;
+        display: flex;" class="wide column">
+                <div *ngFor="let item of userData.organizations.nodes" class="text">
+                    <img class="ui avatar image" src={{item.avatarUrl}}>
+                </div>
+            </div>
+        </ng-container>
+        <div *ngIf="!mobileView"  class="ui divider"></div>
+
+        <ng-container *ngIf="userData.sponsorshipsAsSponsor.totalCount !=0 && !mobileView">
+            <div class="wide column">
+                <span style="font-size: 16px;font-weight: 600;
+            line-height: 24px;color: #24292e;">
+                    Sponsor
+                </span>
+            </div>
+
+            <div style="margin-top: 4px;display: flex;flex-wrap: wrap;" class="wide column">
+                <div *ngFor="let item of userData.sponsorshipsAsSponsor.nodes" class="text">
+                    <img class="ui avatar image" src={{item.maintainer.avatarUrl}}>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- Overview -->
+
+    <ng-container *ngIf="selectedTab == 'overview'">
+        <div class="twelve wide column">
+
+            <div style="margin-top: 8px;" class="wide column">
+                <span style="font-size: 16px;font-weight: 400;
+            line-height: 24px;color: #24292e;">
+                    Popular repositories
+                </span>
+            </div>
+
+            <div *ngIf="userData?.repositories.totalCount"
+                style="margin-top: 10px;display: flex;align-items: baseline;flex-wrap: wrap;">
+
+                <div *ngFor="let item of userData?.repositories.nodes.slice(0,6)"
+                    style="width: 100%;margin-right: 15px;flex: 1 1 45%;min-width: 20em;" class="ui card">
+                    <div class="content">
+                        <div style="font-size:600!important;color:#0366d6;font-size: 14px;" class="header">{{item.name}}
+                        </div>
+                        <div style="font-size:12px;line-height:1.5" class="description">
+                            <p>{{item.description}}</p>
+                        </div>
+                    </div>
+                    <div class="extra content">
+
+                        <ng-container *ngIf="item.primaryLanguage">
+                            <span
+                                [ngStyle]="{'background-color':item.primaryLanguage.name === 'Swift' ? '#ffac45' : item.primaryLanguage.name === 'Objective-C' ? '#438eff' : item.primaryLanguage.name === 'SCSS' ? '#c6538c' : item.primaryLanguage.name === 'JavaScript' ? '#f1e05a' : ''}"
+                                style="position:relative;top: 1px;display: inline-block;width: 12px;height: 12px;border: 1px solid lightgrey;border-radius: 50%;"></span>
+                            <span style="margin-left: 3px;margin-right: 13px;">{{item.primaryLanguage.name}}</span>
+                        </ng-container>
+
+                        <i style="color: #586069;" class="star outline icon"></i>
+                        <span style="margin-right: 13px;">{{item.stargazerCount}}</span>
+                        <i style="color: #959da5;" class="sitemap icon"></i>
+                        <span>{{item.forkCount}}</span>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="margin-top: 20px;" class="wide column">
+                <span style="font-size: 16px;font-weight: 400;
+            line-height: 24px;color: #24292e;">
+                    {{userData.contributionsCollection.contributionCalendar.totalContributions}} contributions in
+                    {{contribution_year}}
+                </span>
+            </div>
+
+            <!-- <div style="min-height: 10em;min-width: 20em;"> -->
+            <div [ngStyle]="{'display': loaderForGetContribution ? 'flex' : 'block' }"
+                style="width: 100%;min-height: 15em;border: 1px solid lightgray;pointer-events: none;border-radius: 5px;justify-content: center;align-items: center;">
+                <ng-calendar-heatmap *ngIf="!loaderForGetContribution" [data]="calendarData"
+                    [options]="calendarOptionsCustom"></ng-calendar-heatmap>
+                <div *ngIf="loaderForGetContribution" class="ui active centered inline loader"></div>
+            </div>
+            <!-- </div> -->
+
+            <div style="margin-top: 20px;" class="wide column">
+                <span style="font-size: 16px;font-weight: 400;
+            line-height: 24px;color: #24292e;">
+                    Contribution activity
+                </span>
+            </div>
+
+            <div class="ui grid">
+
+                <div class="fourteen wide column">
+                    <!-- <div *ngIf="loaderForGetContribution" class="ui active centered inline loader"></div> -->
+                    <ng-container>
+
+                        <div style="font-weight: 600;font-size: 12px;" class="ui horizontal divider header">
+                            December 2020
+                        </div>
+                        <div class="wide column">
+
+                            <div style="left: 1em;top: 4em;" class="ui vertical divider">
+                                <span style="background: lightgray;border-radius: 33%;
+                       line-height: 0em;
+                       padding-left: 0.3em;">
+                                    <i style="color:#586069;" class="upload icon"></i>
+                                </span>
+                            </div>
+
+                            <div style="font-size: 16px;color: #24292e;margin-left: 2em;">
+                                Created 2 commits in 2 repository
+                            </div>
+
+                            <div style="font-size: 14px;margin-left: 2.5em;">
+                                <a>etienne/dialog-edit</a><small style="color: #586069;"> 3 commits</small>
+                            </div>
+                        </div>
+                        <div style="width: 100%;">
+                            <button class="fluid ui basic button"><a>Show more activity</a></button>
+                        </div>
+                    </ng-container>
+                </div>
+
+
+                <div *ngIf="!mobileView"  class="two wide column">
+
+                    <div class="ui vertical buttons">
+                        <ng-container *ngIf="userData.contributionsCollection">
+                            <button (click)="getContributionByYear(item)"
+                                *ngFor="let item of userData.contributionsCollection.contributionYears;let i = index"
+                                [ngClass]="{'activebutton':userData.contributionsCollection.endedAt.slice(0,4) == item}"
+                                class="ui button ">{{item}}</button>
+                        </ng-container>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </ng-container>
+
+    <!-- Repositories -->
+
+    <ng-container *ngIf="selectedTab == 'repositories'">
+
+        <div class="twelve wide column">
+
+            <div style="margin-top: 15px;display: flex;align-items: baseline;flex-wrap: wrap;">
+
+                <div style="width: 100%;flex: 30%;" class="ui search">
+                    <input style="width: 100%;height: 2em;color: #fff;" class="prompt" type="text"
+                        placeholder="Find a repository...">
+                    <div class="results"></div>
+                </div>
+
+                <div style="width: 100%;flex: 5%;margin-left: 10px;margin-right: 10px;" class="ui selection dropdown">
+                    <input style="height: 2.5em" type="hidden" name="gender">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Type : All</div>
+                </div>
+
+                <div style="width: 100%;flex: 5%;margin-left: 10px;margin-right: 10px;" class="ui selection dropdown">
+                    <input style="height: 2.5em" type="hidden" name="gender">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Language : All</div>
+                </div>
+
+            </div>
+
+
+            <div *ngFor="let item of userData.repositories.nodes" style="padding-top: 0.7em;">
+                <div class="ui divider"></div>
+
+                <div class="item borderless">
+                    <a style="color:#0366d6;font-weight: 600;font-size: 20px;">{{item.name}}</a>
+                </div>
+                <small *ngIf="item.isFork" style="margin-top: 10px;color: #586069">Forked from
+                    {{item.parent.resourcePath}}</small>
+                <div style="color:#586069;font-size: 14px;margin-top: 10px;">{{item.description}}</div>
+
+                <span *ngIf="item.labels.nodes.length" style="display: flex;flex-wrap: wrap;">
+                    <div *ngFor="let label of item.labels.nodes" style="padding-top: 0.5em;" class="ui labels">
+                        <a style="background: #f1f8ff;color: #0366d6;border-radius: 20%;" class="ui label">
+                            {{label.name}}
+                        </a>
+                    </div>
+                </span>
+
+                <div style="margin-top: 1em;" class="extra content">
+
+                    <ng-container *ngIf="item.primaryLanguage">
+                        <span
+                            [ngStyle]="{'background-color':item.primaryLanguage.name === 'Swift' ? '#ffac45' : item.primaryLanguage.name === 'Objective-C' ? '#438eff' : item.primaryLanguage.name === 'SCSS' ? '#c6538c' : item.primaryLanguage.name === 'JavaScript' ? '#f1e05a' : 'green'}"
+                            style="position:relative;top: 1px;display: inline-block;width: 12px;height: 12px;border: 1px solid lightgrey;border-radius: 50%;"></span>
+                        <span style="margin-left: 3px;margin-right: 13px;">{{item.primaryLanguage.name}}</span>
+                    </ng-container>
+
+                    <i style="color: #586069;" class="star outline icon"></i>
+                    <span style="margin-right: 13px;">{{item.stargazerCount}}</span>
+
+                    <i style="color: #586069;" class="sitemap outline icon"></i>
+                    <span style="margin-right: 13px;">{{item.forkCount}}</span>
+
+                    <span *ngIf="item.licenseInfo">
+                        <i style="color: #959da5;" class="balance scale icon"></i>
+                        <span>{{item.licenseInfo.name}}</span>
+                    </span>
+
+                    <span style="margin-left: 13px;color: #586069;">Updated on {{item.updatedAt | date}}</span>
+
+                </div>
+                <!-- <div class="ui divider"></div> -->
+            </div>
+
+            <!-- <div style="margin-top: 10px;display: flex;align-items: baseline;flex-wrap: wrap;">
+    
+                <div style="width: 100%;margin-right: 15px;flex: 48%;min-width: 20em;" class="ui card">
+                    <div class="content">
+                        <div style="font-size:600!important;color:#0366d6;font-size: 14px;" class="header">Cute Dog</div>
+                        <div style="font-size:12px;line-height:1.5" class="description">
+                            <p>Cute dogs come in a variety of shapes and sizes. Some cute dogs are cute for their adorable
+                                faces, others for their tiny stature, and even others for their massive size.</p>
+                            <p>Many people also have their own barometers for what makes a cute dog.</p>
+                        </div>
+                    </div>
+                    <div class="extra content">
+    
+                        <span
+                            style="background-color: #701516;position:relative;top: 1px;display: inline-block;width: 12px;height: 12px;border: 1px solid lightgrey;border-radius: 50%;"></span>
+                        <span style="margin-left: 3px;margin-right: 13px;">Ruby</span>
+    
+    
+                        <i style="color: #586069;" class="star outline icon"></i> 
+                        <span style="margin-right: 13px;">0</span>
+                        <i style="color: #959da5;" class="sitemap icon"></i> 
+                        <span>0</span>
+    
+                    </div>
+                </div>
+    
+                <div style="width: 100%;margin-right: 15px;flex: 48%;min-width: 20em" class="ui card">
+                    <div class="content">
+                        <div style="font-size:600!important;color:#0366d6;font-size: 14px;" class="header">Cute Dog</div>
+                        <div style="font-size:12px;line-height:1.5" class="description">
+                            <p>Cute dogs come in a variety of shapes and sizes. Some cute dogs are cute for their adorable
+                                faces, others for their tiny stature, and even others for their massive size.</p>
+                            <p>Many people also have their own barometers for what makes a cute dog.</p>
+                        </div>
+                    </div>
+                    <div class="extra content">
+    
+                        <span
+                            style="background-color: #701516;position:relative;top: 1px;display: inline-block;width: 12px;height: 12px;border: 1px solid lightgrey;border-radius: 50%;"></span>
+                        <span style="margin-left: 3px;margin-right: 13px;">Ruby</span>
+    
+    
+                        <i style="color: #586069;" class="star outline icon"></i> 
+                        <span style="margin-right: 13px;">0</span>
+                        <i style="color: #959da5;" class="sitemap icon"></i> 
+                        <span>0</span>
+    
+                    </div>
+                </div>
+    
+                <div style="width: 100%;margin-right: 15px;flex: 48%;min-width: 20em" class="ui card">
+                    <div class="content">
+                        <div style="font-size:600!important;color:#0366d6;font-size: 14px;" class="header">Cute Dog</div>
+                        <div style="font-size:12px;line-height:1.5" class="description">
+                            <p>Cute dogs come in a variety of shapes and sizes. Some cute dogs are cute for their adorable
+                                faces, others for their tiny stature, and even others for their massive size.</p>
+                            <p>Many people also have their own barometers for what makes a cute dog.</p>
+                        </div>
+                    </div>
+                    <div class="extra content">
+    
+                        <span
+                            style="background-color: #701516;position:relative;top: 1px;display: inline-block;width: 12px;height: 12px;border: 1px solid lightgrey;border-radius: 50%;"></span>
+                        <span style="margin-left: 3px;margin-right: 13px;">Ruby</span>
+    
+    
+                        <i style="color: #586069;" class="star outline icon"></i> 
+                        <span style="margin-right: 13px;">0</span>
+                        <i style="color: #959da5;" class="sitemap icon"></i> 
+                        <span>0</span>
+    
+                    </div>
+                </div>
+    
+                <div style="width: 100%;margin-right: 15px;flex: 48%;min-width: 20em" class="ui card">
+                    <div class="content">
+                        <div style="font-size:600!important;color:#0366d6;font-size: 14px;" class="header">Cute Dog</div>
+                        <div style="font-size:12px;line-height:1.5" class="description">
+                            <p>Cute dogs come in a variety of shapes and sizes. Some cute dogs are cute for their adorable
+                                faces, others for their tiny stature, and even others for their massive size.</p>
+                            <p>Many people also have their own barometers for what makes a cute dog.</p>
+                        </div>
+                    </div>
+                    <div class="extra content">
+    
+                        <span
+                            style="background-color: #701516;position:relative;top: 1px;display: inline-block;width: 12px;height: 12px;border: 1px solid lightgrey;border-radius: 50%;"></span>
+                        <span style="margin-left: 3px;margin-right: 13px;">Ruby</span>
+    
+    
+                        <i style="color: #586069;" class="star outline icon"></i> 
+                        <span style="margin-right: 13px;">0</span>
+                        <i style="color: #959da5;" class="sitemap icon"></i> 
+                        <span>0</span>
+    
+                    </div>
+                </div>
+    
+                <div style="width: 100%;margin-right: 15px;flex: 48%;min-width: 20em" class="ui card">
+                    <div class="content">
+                        <div style="font-size:600!important;color:#0366d6;font-size: 14px;" class="header">Cute Dog</div>
+                        <div style="font-size:12px;line-height:1.5" class="description">
+                            <p>Cute dogs come in a variety of shapes and sizes. Some cute dogs are cute for their adorable
+                                faces, others for their tiny stature, and even others for their massive size.</p>
+                            <p>Many people also have their own barometers for what makes a cute dog.</p>
+                        </div>
+                    </div>
+                    <div class="extra content">
+    
+                        <span
+                            style="background-color: #701516;position:relative;top: 1px;display: inline-block;width: 12px;height: 12px;border: 1px solid lightgrey;border-radius: 50%;"></span>
+                        <span style="margin-left: 3px;margin-right: 13px;">Ruby</span>
+    
+    
+                        <i style="color: #586069;" class="star outline icon"></i> 
+                        <span style="margin-right: 13px;">0</span>
+                        <i style="color: #959da5;" class="sitemap icon"></i> 
+                        <span>0</span>
+    
+                    </div>
+                </div>
+    
+                <div style="width: 100%;margin-right: 15px;flex: 48%;min-width: 20em" class="ui card">
+                    <div class="content">
+                        <div style="font-size:600!important;color:#0366d6;font-size: 14px;" class="header">Cute Dog</div>
+                        <div style="font-size:12px;line-height:1.5" class="description">
+                            <p>Cute dogs come in a variety of shapes and sizes. Some cute dogs are cute for their adorable
+                                faces, others for their tiny stature, and even others for their massive size.</p>
+                            <p>Many people also have their own barometers for what makes a cute dog.</p>
+                        </div>
+                    </div>
+                    <div class="extra content">
+    
+                        <span
+                            style="background-color: #701516;position:relative;top: 1px;display: inline-block;width: 12px;height: 12px;border: 1px solid lightgrey;border-radius: 50%;"></span>
+                        <span style="margin-left: 3px;margin-right: 13px;">Ruby</span>
+    
+    
+                        <i style="color: #586069;" class="star outline icon"></i> 
+                        <span style="margin-right: 13px;">0</span>
+                        <i style="color: #959da5;" class="sitemap icon"></i> 
+                        <span>0</span>
+    
+                    </div>
+                </div>
+    
+            </div> -->
+
+        </div>
+
+    </ng-container>
+
+    <!-- Projects -->
+
+    <ng-container *ngIf="selectedTab =='projects'">
+
+        <div class="twelve wide column">
+
+            <div style="margin-top: 15px;display: flex;align-items: baseline;flex-wrap: wrap;">
+
+                <div style="width: 100%;flex: 60%;" class="ui search">
+                    <div style="width: 40%;" class="ui icon input">
+                        <input style="height: 2em" class="prompt" type="text" placeholder="Search all projects...">
+                        <i class="search icon"></i>
+                    </div>
+                    <div class="results"></div>
+                </div>
+            </div>
+
+            <div style="padding-top: 0.7em;">
+
+                <div class="ui top attached menu">
+                    <div class="ui dropdown icon item">
+                        <i style="font-weight: 600;color: #24292e;margin-right: 12px;"
+                            class="chart bar outline icon"><span
+                                style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin-left: 8px;">0
+                                Open</span></i>
+                        <i style="color: #586069;" class="check icon"><span
+                                style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin-left: 8px">0
+                                Closed</span></i>
+                    </div>
+                    <div style="padding-right: 1.5em;" class="right menu">
+                        <select style="border: none;color: #586069;" class="ui dropdown">
+                            <option value="">Sort</option>
+                        </select>
+                    </div>
+                </div>
+                <div *ngIf="userData.projects.totalCount == 0"  style="display: flex;justify-content: center;align-items: center;height: 10em;"
+                    class="ui bottom attached segment">
+                    <h3 class="mb-1">{{userData.name}} doesn't have any projects yet.</h3>
+                </div>
+
+                <ng-container *ngIf="userData.projects.totalCount != 0" >
+                <!-- <div  *ngFor="let item of userData.projects.nodes"  style="display: flex;height: 10em;"
+                    class="ui bottom attached segment">
+                    <div class="twelve wide column">
+                        <h3 class="mb-1">{{item.name}}</h3>
+
+                    </div>
+                    <div class="twelve wide column">
+                        <small class="mb-1">Updated on {{item.updatedAt | date}} </small>
+
+                    </div>
+                    <div class="ui divider"></div>
+
+                </div> -->
+
+                <div *ngFor="let item of userData.projects.nodes" style="padding-top: 0.7em;">
+                    <div class="ui divider"></div>
+    
+                    <div class="item borderless">
+                        <a style="font-weight: 600;font-size: 20px;">{{item.name}}</a>
+                    </div>
+                    <small style="margin-top: 10px;color: #586069">Updated on {{item.updatedAt | date}}</small>
+                    <!-- <div class="ui divider"></div> -->
+                </div>
+            </ng-container>
+            </div>
+
+        </div>
+
+    </ng-container>
+
+
+    <!-- Packages -->
+
+    <ng-container *ngIf="selectedTab =='packages'">
+
+        <div class="twelve wide column">
+            <div style="text-align: center;padding-top: 3em;color: #586069;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 39.89 40.18" height="56" width="56">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: #79b8ff;
+                            }
+
+                            .cls-2 {
+                                fill: #2088ff;
+                            }
+
+                            .cls-3 {
+                                fill: none;
+                            }
+                        </style>
+                    </defs>
+                    <polygon class="cls-1" points="19.59 20.19 11.1 25.1 11.1 15.27 19.61 10.36 19.59 20.19"></polygon>
+                    <path class="cls-2"
+                        d="M34.16,31.34a1,1,0,0,1-.5-.14l-8.52-4.88a1,1,0,0,1,1-1.73l8.52,4.88A1,1,0,0,1,35,30.83,1,1,0,0,1,34.16,31.34Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-2"
+                        d="M25.64,26.46h0a1,1,0,0,1-1-1L24.7,16a1,1,0,0,1,1-1,1,1,0,0,1,1,1l-.06,9.45A1,1,0,0,1,25.64,26.46Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-2"
+                        d="M17.37,31.19a1,1,0,0,1-.5-1.87l8.27-4.73a1,1,0,1,1,1,1.73l-8.27,4.74A1,1,0,0,1,17.37,31.19Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-2"
+                        d="M25.66,36.28a1,1,0,0,1-.5-.13l-8.51-4.92a1,1,0,0,1-.5-.86V20.54a1,1,0,0,1,.5-.87l8.51-4.91a1,1,0,0,1,1,0l8.51,4.91a1,1,0,0,1,.5.87v9.83a1,1,0,0,1-.5.86l-8.51,4.92A1,1,0,0,1,25.66,36.28Zm-7.51-6.49,7.51,4.34,7.51-4.34V21.11l-7.51-4.33-7.51,4.33Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-2"
+                        d="M34.23,13.28a2.65,2.65,0,1,1,2.65-2.65A2.65,2.65,0,0,1,34.23,13.28Zm0-3.3a.65.65,0,1,0,.65.65A.65.65,0,0,0,34.23,10Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-2"
+                        d="M16.66,13.28a2.65,2.65,0,1,1,2.65-2.65A2.65,2.65,0,0,1,16.66,13.28Zm0-3.3a.65.65,0,1,0,.65.65A.65.65,0,0,0,16.66,10Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-2"
+                        d="M34.37,43.17A2.65,2.65,0,1,1,37,40.52,2.65,2.65,0,0,1,34.37,43.17Zm0-3.3a.65.65,0,1,0,.65.65A.66.66,0,0,0,34.37,39.87Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-2"
+                        d="M16.89,43a2.65,2.65,0,1,1,2.65-2.65A2.65,2.65,0,0,1,16.89,43Zm0-3.3a.65.65,0,1,0,.65.65A.65.65,0,0,0,16.89,39.69Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-2"
+                        d="M8.22,28.21a2.65,2.65,0,1,1,2.65-2.65A2.65,2.65,0,0,1,8.22,28.21Zm0-3.3a.65.65,0,1,0,.65.65A.65.65,0,0,0,8.22,24.91Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-2"
+                        d="M42.81,28.21a2.65,2.65,0,1,1,2.65-2.65A2.65,2.65,0,0,1,42.81,28.21Zm0-3.3a.65.65,0,1,0,.65.65A.65.65,0,0,0,42.81,24.91Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-3" d="M33.1,29.86" transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-1"
+                        d="M28.11,41.86l-1.52.87V39a1,1,0,0,0-2,0v3.72L23,41.86a1,1,0,0,0-1.36.36A1,1,0,0,0,22,43.59l3.53,2,3.54-2a1,1,0,0,0,.36-1.37A1,1,0,0,0,28.11,41.86Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-1"
+                        d="M42,30.51a1,1,0,0,0-1,1v1.81l-3.34-1.94a1,1,0,0,0-1.37.37,1,1,0,0,0,.37,1.36L39.93,35l-1.49.86a1,1,0,0,0,.5,1.87,1,1,0,0,0,.5-.14l3.53-2V31.51A1,1,0,0,0,42,30.51Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-1"
+                        d="M39.44,13.45a1,1,0,0,0-1,1.74l1.49.85-3.5,2a1,1,0,0,0,.5,1.87,1,1,0,0,0,.5-.14L41,17.75v1.82a1,1,0,0,0,2,0V15.49Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-1"
+                        d="M29.11,7.49l-3.54-2L22,7.49a1,1,0,0,0,1,1.73l1.55-.89v3.34a1,1,0,0,0,2,0V8.34l1.52.88a1,1,0,0,0,.49.13,1,1,0,0,0,.51-1.86Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-1"
+                        d="M14.55,18l-3.36-2,1.52-.87a1,1,0,0,0-1-1.74l-3.53,2v4.08a1,1,0,0,0,2,0V17.78l3.36,2a1,1,0,0,0,1.37-.37A1,1,0,0,0,14.55,18Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                    <path class="cls-1"
+                        d="M13.34,31.45l-3.16,1.84V31.51a1,1,0,1,0-2,0v4.07l.37.22a1.35,1.35,0,0,0,.26.15l2.9,1.67a1,1,0,0,0,1-1.73L11.19,35l3.16-1.83a1,1,0,1,0-1-1.73Z"
+                        transform="translate(-5.57 -5.45)"></path>
+                </svg>
+
+                <h1 style="color: #24292e;">Get started with GitHub Packages</h1>
+                <p>Safely publish packages, store your packages alongside your
+                    code, and share your packages privately with your team.</p>
+                <p style="font-size: 20px;">Choose an ecosystem</p>
+            </div>
+
+
+            <div style="margin-top: 10px;display: flex;align-items: baseline;flex-wrap: wrap;">
+
+                <div style="width: 100%;margin-right: 15px;flex: 48%;min-width: 20em;" class="ui card">
+                    <div class="content">
+                        <div class="header"><i style="color: #2188ff;margin-right: 5px;" class="docker icon"></i>Docker
+                        </div>
+                        <div class="description">
+                            A software platform used for building applications based on containers — small and
+                            lightweight execution environments.
+                        </div>
+                        <button style="margin-top: 10px;" class="ui compact basic button">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+
+                <div style="width: 100%;margin-right: 15px;flex: 48%;min-width: 20em;" class="ui card">
+                    <div class="content">
+                        <div class="header"><i style="color: orange;margin-right: 5px;" class="envira icon"></i>Apache
+                            Maven</div>
+                        <div class="description">
+                            A software platform used for building applications based on containers — small and
+                            lightweight execution environments.
+                        </div>
+                        <button style="margin-top: 10px;" class="ui compact basic button">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+
+                <div style="width: 100%;margin-right: 15px;flex: 48%;min-width: 20em;" class="ui card">
+                    <div class="content">
+                        <div class="header"><i style="color: rgb(0, 72, 128);margin-right: 5px;"
+                                class="hubspot icon"></i>NuGet</div>
+                        <div class="description">
+                            A software platform used for building applications based on containers — small and
+                            lightweight execution environments.
+                        </div>
+                        <button style="margin-top: 10px;" class="ui compact basic button">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+
+                <div style="width: 100%;margin-right: 15px;flex: 48%;min-width: 20em;" class="ui card">
+                    <div class="content">
+                        <div class="header"><i style="color: rgb(214, 66, 43);margin-right: 5px;"
+                                class="connectdevelop  icon"></i>RubyGems</div>
+                        <div class="description">
+                            A software platform used for building applications based on containers — small and
+                            lightweight execution environments.
+                        </div>
+                        <button style="margin-top: 10px;" class="ui compact basic button">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+
+                <div style="width: 100%;margin-right: 15px;flex: 48%;min-width: 20em;" class="ui card">
+                    <div class="content">
+                        <div class="header"><i style="color:rgb(203, 0, 0);margin-right: 5px;" class="npm icon"></i>npm
+                        </div>
+                        <div class="description">
+                            A software platform used for building applications based on containers — small and
+                            lightweight execution environments.
+                        </div>
+                        <button style="margin-top: 10px;" class="ui compact basic button">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+
+                <div style="width: 100%;margin-right: 15px;flex: 48%;min-width: 20em;" class="ui card">
+                    <div class="content">
+                        <div class="header"><i style="color: black;margin-right: 5px;"
+                                class="codepen icon"></i>Containersbeta</div>
+                        <div class="description">
+                            A software platform used for building applications based on containers — small and
+                            lightweight execution environments.
+                        </div>
+                        <button style="margin-top: 10px;" class="ui compact basic button">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+        </div>
+
+    </ng-container>
+
+</div>

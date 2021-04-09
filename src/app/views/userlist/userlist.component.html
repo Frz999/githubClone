@@ -1,0 +1,14 @@
+<div style="display: flex;height: 100%;width: 100%;justify-content: center;align-items: center;">
+<div style="height:30vh" class="ui horizontal list">
+   
+    <div (click)="selectUser(item.login)"  *ngFor="let item of userList.slice(0,10)" style="cursor: pointer;" class="item">
+      <img class="ui avatar small image" src={{item.avatar_url}}>
+      <div class="content">
+        <div style="font-size: 1.3em;color: #0366d6;" class="header">{{item.login}}</div>
+        {{item.type}}
+      </div>
+    </div>
+
+  </div>
+</div>
+  

@@ -1,0 +1,53 @@
+/////Header
+
+.menu {
+    background: #24292e;
+    border-radius: unset !important;
+}
+
+.github{
+    color: white;
+    font-size: 32px !important;
+    margin: 0 !important;
+}
+
+input {
+    height: 28px !important;
+    width: 272px !important;
+}
+
+.headeritem{
+    color: white !important;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.headeritem:hover{
+    color: grey !important;
+}
+
+.item{
+    padding-left: 16px !important;
+    padding-right: 1px !important;
+}
+
+.bell{
+    color: white !important;
+    font-size: 16px !important;
+}
+
+.plus{
+    color: white !important;
+    font-size: 16px !important;
+    margin: 0 !important;
+}
+.dropdown{
+    color: white !important;
+    margin: 0 !important;
+}
+
+.avatar{
+    // margin: 0 !important;
+    margin-right: 5px !important;
+}
+

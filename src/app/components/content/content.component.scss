@@ -1,0 +1,33 @@
+.actives{
+    font-weight: 600 !important; 
+    color: #24292e !important;
+    border-bottom: 2px solid #f9826c !important;
+    outline: 1px dotted transparent !important;
+    outline-offset: -1px !important;
+}
+
+.activebutton{
+    background-color: #0366d6 !important;
+    color: white;
+}
+
+.customuigrid{
+    margin-top: -1rem;
+    margin-bottom: -1rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    padding: 0;
+    box-sizing: inherit;
+}
